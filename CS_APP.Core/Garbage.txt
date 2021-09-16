@@ -1,0 +1,101 @@
+﻿
+          // //Serialization
+          // using (StreamWriter file = File.CreateText(@"C:\Users\User\source\repos\CS_App\DataBase\object.json"))
+          // {
+          //      JsonSerializer serializer = new JsonSerializer();
+          //      serializer.Serialize(file, listOfAudits);
+          // }
+          //
+          // //Deserialization
+          // using (StreamReader file = File.OpenText(@"C:\Users\User\source\repos\CS_App\DataBase\object.json"))
+          // {
+          //      JsonSerializer serializer = new JsonSerializer();
+          //      var lists = (List<Dictionary<string, string>>)serializer.Deserialize(file, typeof(List<Dictionary<string, string>>));
+          // }
+
+          //saveButton.Visibility = Visibility.Visible;
+
+
+
+          //           private async void SavePolicy(object sender, RoutedEventArgs e)
+          //           {
+          //                var dialog = new MyDialog();
+          //                if (dialog.ShowDialog() == true)
+          //                {
+          //                     await ProcessSave(dialog.ResponseText);
+          //                     textBox.Text = "";
+          //                     saveButton.Visibility = Visibility.Hidden;
+          //                     MessageBox.Show($"Policy with Name: {dialog.ResponseText} saved in database.");
+          //                }
+          //           }
+          //
+          //           private async Task ProcessSave(string name)
+          //           {
+          //                var result = new AuditPolicy
+          //                {
+          //                     Name = name,
+          //                     File = await File.ReadAllBytesAsync(textBox.Text)
+          //                };
+          //
+          //                var dbContext = new ApplicationContext();
+          //                var policiesRepo = new AuditPolicyRepository(dbContext);
+          //
+          //                await policiesRepo.Create(result);
+          //
+          //                await policiesRepo.SaveChanges();
+          // <Button x:Name="saveButton" Visibility="Hidden" Content="Save" HorizontalAlignment="Left" Height="28" Margin="119,35,0,0" VerticalAlignment="Top" Width="80" Click="SavePolicy"/>
+          // }
+     }
+}
+// textBox.Text = await File.ReadAllTextAsync(textBox.Text);
+//
+// var policiesCollection = Regex.Matches(textBox.Text, @"<custom_item>[\s\S]*?<\/custom_item>");
+//
+// var auditsList = new List<string>();
+//
+// foreach (Match policy in policiesCollection)
+// {
+//      auditsList.Add(Regex.Replace(policy.Value, @"<custom_item>|</custom_item>", ""));
+// }
+//
+// var listOfDictionaries = new List<Dictionary<string, string>>();
+//
+// string pattern =
+//      @"type|description|info|solution|see_also|value_type|value_data|right_type|reference|reg_key|reg_item|reg_option|reference|check_type";
+//
+// foreach (var audit in auditsList)
+// {
+//      var type = Regex.Split(audit, @"\s+:");
+//
+//      List<string> result = new List<string>();
+//
+//      foreach (var str in type)
+//      {
+//
+//           var value = Regex.Match(str, pattern).Value;
+//           if (!string.IsNullOrWhiteSpace(value))
+//           {
+//                var temp = Regex.Split(str, pattern)[0];
+//                temp = Regex.Replace(temp, "[\"\n]", string.Empty).Trim();
+//                result.Add(temp);
+//                result.Add(value);
+//           }
+//           else
+//           {
+//                result.Add(Regex.Replace(str, "[\"\n]", string.Empty).Trim());
+//           }
+//
+//      }
+//
+//      var valueDictionary = new Dictionary<string, string>();
+//
+//      for (int i = 1; i < result.Count - 1; i++)
+//      {
+//           if (Regex.IsMatch(result[i], pattern))
+//           {
+//                valueDictionary[result[i]] = result[i + 1];
+//           }
+//      }
+//
+//      listOfDictionaries.Add(valueDictionary);
+// }
