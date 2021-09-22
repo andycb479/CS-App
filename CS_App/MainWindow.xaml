@@ -11,17 +11,24 @@
           <DockPanel>
                <Menu DockPanel.Dock="Top">
                     <MenuItem Header="_File" FontSize="14">
-                         <MenuItem Header="_New" Click="ImportPolicy" />
-                         <MenuItem Header="_Open" Click="OpenJsonAudits" />
+                         <MenuItem Header="_Open Audit" Click="ImportPolicy" />
+                         <MenuItem Header="_Open Json" Click="OpenJsonAudits" />
                          <MenuItem Header="_Save" Click ="SaveAudits"/>
                          <Separator />
                          <MenuItem Header="_Exit" />
                     </MenuItem>
+                    <MenuItem Header="_Export" FontSize="14">
+                         <MenuItem Header="Export Selected" Click="ExportSelected" />
+                    </MenuItem>
                </Menu>
-               <TextBox AcceptsReturn="True" Visibility="Hidden"/>
+               <DockPanel Width="300" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,22,10,6">
+                    <TextBox x:Name="searchBox" Text="" TextWrapping="Wrap" Width="200" Height="25" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" FontSize="16" />
+                    <Button x:Name="button" Content="Search" Width="Auto" Click="SearchHandler"/>
+               </DockPanel>
           </DockPanel>
-          <TextBlock x:Name="auditsCount" Text="Total Audits: 0" TextWrapping="Wrap" Margin="10,38,579,604" FontSize="16" Panel.ZIndex="1" FontWeight="Bold"/>
+          <TextBlock x:Name="auditsCount" Text="Total Audits: 0" TextWrapping="Wrap" Margin="10,36,0,0" FontSize="16" Panel.ZIndex="1" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
           <ListView x:Name="auditsList" Margin="10,85,10,10">
           </ListView>
+          <CheckBox x:Name="SelectAllCheckBox" Content="Select All" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Visibility="Hidden" Click="SelectAllHandler"/>
      </Grid>
 </Window>
