@@ -262,7 +262,7 @@ namespace CS_App
 
                foreach (var dictionary in _allAuditsList)
                {
-                    var containsWord = dictionary.Values.Select(x => x.ToLower().Contains(searchBox.Text)).Any(x => x);
+                    var containsWord = dictionary.Values.Select(x => x.ToLower().Contains(searchBox.Text.ToLower())).Any(x => x);
 
                     if (containsWord)
                     {
