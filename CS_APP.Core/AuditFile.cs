@@ -23,7 +23,7 @@ namespace CS_APP.Core
           {
                _content = await File.ReadAllTextAsync(_filePath);
 
-               var pattern = @"type|description|info|solution|see_also|value_type|value_data|right_type|reference|reg_key|reg_item|reg_option|reference|check_type";
+               var pattern = @"type|description|info|solution|see_also|value_type|value_data|right_type|reference|reg_key|reg_item|reg_option|reference|check_type|reg_ignore_hku_users|audit_policy_subcategory";
 
                var auditStrings = Regex.Matches(_content, @"<custom_item>[\s\S]*?<\/custom_item>");
 

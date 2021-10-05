@@ -274,5 +274,20 @@ namespace CS_App
 
                DisplayAudits(_currentAuditList);
           }
+
+          private void AuditWithSelected(object sender, RoutedEventArgs e)
+          {
+               var selectedAudits = _currentAuditList.Where((x, index) => _selectedAudits[index]).ToList();
+               var auditStatus = new AuditStatus(selectedAudits);
+
+               auditStatus.Show();
+          }
+
+          private void AuditWithAll(object sender, RoutedEventArgs e)
+          {
+               var auditStatus = new AuditStatus(_currentAuditList);
+               auditStatus.Show();
+
+          }
      }
 }

@@ -1,0 +1,39 @@
+﻿<Window x:Class="CS_App.AuditStatus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CS_App"
+        mc:Ignorable="d"
+        Title="AuditStatus" Height="450" Width="800">
+     <Grid>
+          <Grid.RowDefinitions>
+               <RowDefinition Height="*"></RowDefinition>
+               <RowDefinition Height="2*"></RowDefinition>
+          </Grid.RowDefinitions>
+          <DockPanel LastChildFill="True" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Center">
+               <StackPanel Height="120" >
+                    <DockPanel Width="250" Height="90" Background="#E5E22F2F" VerticalAlignment="Center" HorizontalAlignment="Center">
+                         <TextBlock x:Name="FailedCountText" Text="0" TextWrapping="Wrap" FontSize="36" Panel.ZIndex="1" Foreground="White" TextAlignment="Center" Height="50"/>
+                    </DockPanel>
+                    <TextBlock x:Name="Failed" Text="Failed" TextWrapping="Wrap" FontSize="18" Panel.ZIndex="1" TextAlignment="Center" Height="50"/>
+               </StackPanel>
+               <StackPanel Height="120">
+                    <DockPanel Width="250"  Height="90" Background="#E5FFB141">
+                         <TextBlock x:Name="WarningCountText" Text="0" TextWrapping="Wrap" FontSize="36" Panel.ZIndex="1" Foreground="White" TextAlignment="Center" Height="50"/>
+                    </DockPanel>
+                    <TextBlock x:Name="Warning" Text="Warning" TextWrapping="Wrap" FontSize="18" Panel.ZIndex="1" TextAlignment="Center" Height="50"/>
+               </StackPanel>
+               <StackPanel Height="120">
+                    <DockPanel Width="250"  Height="90" Background="#E500B218">
+                         <TextBlock x:Name="PassedCount" Text="0" TextWrapping="Wrap" FontSize="36" Panel.ZIndex="1" Foreground="White" TextAlignment="Center" Height="50"/>
+                    </DockPanel>
+                    <TextBlock x:Name="Passed" Text="Passed" TextWrapping="Wrap" FontSize="18" Panel.ZIndex="1" TextAlignment="Center" Height="50"/>
+               </StackPanel>
+          </DockPanel>
+          <DockPanel LastChildFill="True" Grid.Row="1" Background="#FFDEDEDE">
+               <ListView x:Name="AuditCheckList" Margin="20,0,20,0" VerticalAlignment="Stretch" DockPanel.Dock="Left" HorizontalAlignment="Stretch" BorderBrush="{x:Null}">
+               </ListView>
+          </DockPanel>
+     </Grid>
+</Window>
