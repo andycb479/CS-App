@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using CS_APP.Core;
+using CS_APP.Core.Models;
 using Microsoft.Win32;
 
 
@@ -18,15 +19,18 @@ namespace CS_App
      public partial class AuditStatus : Window
      {
           private readonly List<Dictionary<string, string>> _audits;
+          private readonly Dictionary<string, ModifiedPolicy> _systemRegistryState;
           private readonly bool[] _passedAudits;
           private readonly string[] _failedAuditsResponse;
           private readonly RegistryKey _registryLocalMachine = Registry.LocalMachine;
           private readonly RegistryKey _registryCurrentUser = Registry.Users;
           private readonly IniFile _localSecurityPolicies;
+          
 
-          public AuditStatus(List<Dictionary<string, string>> audits)
+          public AuditStatus(List<Dictionary<string, string>> audits, Dictionary<string,ModifiedPolicy> systemRegistryState)
           {
                _audits = audits;
+               _systemRegistryState = systemRegistryState;
                InitializeComponent();
                _passedAudits = new bool[_audits.Count];
                _failedAuditsResponse = new string[_audits.Count];
@@ -71,7 +75,6 @@ namespace CS_App
                     _passedAudits[auditIndex] = true;
                     return;
                }
-
                var auditValue = audit["value_data"];
 
                var registryPath = audit["reg_key"]
@@ -214,8 +217,15 @@ namespace CS_App
 
                          var auditValue = audit["value_data"];
                          int.TryParse(auditValue, out var auditIntValue);
+                         var systemValue = Registry.GetValue(registryPath, audit["reg_item"], null);
                          try
                          {
+                              _systemRegistryState[audit["reg_item"]] = new ModifiedPolicy()
+                              {
+                                   RegistryKey = registryPath,
+                                   RegistryInitialValue = systemValue,
+                                   RegistryValueName = audit["reg_item"]
+                              };
                               Registry.SetValue(registryPath, audit["reg_item"], auditIntValue);
                               MessageBox.Show($"Registry Setting was modified successfully.");
 
@@ -227,7 +237,6 @@ namespace CS_App
                     }
                }
           }
-
 
           private IniFile ExportLocalSecurityPolicy()
           {

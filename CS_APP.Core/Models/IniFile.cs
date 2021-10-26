@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CS_APP.Core
+namespace CS_APP.Core.Models
 {
      public class IniFile
      {

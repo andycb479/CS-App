@@ -1,4 +1,5 @@
-﻿using CS_APP.Core;
+﻿using System;
+using CS_APP.Core;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using CS_APP.Core.Models;
 
 namespace CS_App
 {
@@ -18,19 +20,20 @@ namespace CS_App
           private List<Dictionary<string, string>> _allAuditsList;
           private List<Dictionary<string, string>> _currentAuditList;
           private bool[] _selectedAudits;
+          private Dictionary<string, ModifiedPolicy> _systemRegistryState;
 
           public MainWindow()
           {
                InitializeComponent();
                _currentAuditList = new List<Dictionary<string, string>>();
                _allAuditsList = new List<Dictionary<string, string>>();
-
+               _systemRegistryState = new Dictionary<string, ModifiedPolicy>();
           }
 
           private async void ImportPolicy(object sender, RoutedEventArgs e)
           {
 
-               OpenFileDialog openFileDialog = new OpenFileDialog() { };
+               OpenFileDialog openFileDialog = new OpenFileDialog();
                if (openFileDialog.ShowDialog() == true)
                {
                     _path = openFileDialog.FileName;
@@ -278,16 +281,64 @@ namespace CS_App
           private void AuditWithSelected(object sender, RoutedEventArgs e)
           {
                var selectedAudits = _currentAuditList.Where((x, index) => _selectedAudits[index]).ToList();
-               var auditStatus = new AuditStatus(selectedAudits);
+               var auditStatus = new AuditStatus(selectedAudits, _systemRegistryState);
 
                auditStatus.Show();
           }
 
           private void AuditWithAll(object sender, RoutedEventArgs e)
           {
-               var auditStatus = new AuditStatus(_currentAuditList);
+               var auditStatus = new AuditStatus(_currentAuditList, _systemRegistryState);
                auditStatus.Show();
+          }
 
+          private void RollBackSystem(object sender, RoutedEventArgs e)
+          {
+               if (_systemRegistryState.Count == 0)
+               {
+                    MessageBox.Show("No modifications were made!"); return;
+               }
+               
+               foreach (var pair in _systemRegistryState)
+               {
+                    string registryValueName = pair.Key;
+                    ModifiedPolicy registryInitialState = pair.Value;
+                    if (registryInitialState.RegistryInitialValue == null)
+                    {
+                         try
+                         {
+                              using RegistryKey key =
+                                   registryInitialState.RegistryKey.Contains(Registry.LocalMachine.Name)
+                                        ? Registry.LocalMachine.OpenSubKey(registryInitialState.RegistryKey.Replace(
+                                                  $"{Registry.LocalMachine.Name}\\",
+                                                  ""),true)
+                                        : Registry.CurrentUser.OpenSubKey(registryInitialState.RegistryKey.Replace(
+                                                  $"{Registry.CurrentUser.Name}\\",
+                                                  ""),true);
+                              if (key == null)
+                              {
+                                   MessageBox.Show($"Registry {registryValueName} not found!");
+                              }
+                              else
+                              {
+                                   key.DeleteValue(registryValueName);
+                              }
+                         }
+                         catch (Exception exception)
+                         {
+                              MessageBox.Show("System is at initial state!");
+                              return;
+                         }
+                    }
+                    else
+                    {
+                         Registry.SetValue(registryInitialState.RegistryKey, registryValueName, registryInitialState.RegistryInitialValue);
+                    }
+               }
+               
+               MessageBox.Show("System rolled back to initial state!");
           }
      }
+
+
 }

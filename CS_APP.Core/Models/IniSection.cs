@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CS_APP.Core
+namespace CS_APP.Core.Models
 {
      public class IniSection : Dictionary<string, string>
      {
