@@ -1,4 +1,4 @@
-﻿namespace CS_APP.DataLayer.Repository
+﻿namespace CS_APP.DataLayer.Models
 {
      public class Entity
      {

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using CS_APP.DataLayer.Models;
 
 namespace CS_APP.DataLayer.Repository
 {

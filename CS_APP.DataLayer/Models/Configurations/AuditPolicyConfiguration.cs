@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CS_APP.DataLayer.Models
+namespace CS_APP.DataLayer.Models.Configurations
 {
      class AuditPolicyConfiguration : IEntityTypeConfiguration<AuditPolicy>
      {
